@@ -1,0 +1,173 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>🚗 Distance Converter Car</title>
+    <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+
+    <!-- Clouds -->
+    <div class="cloud cloud1"></div>
+    <div class="cloud cloud2"></div>
+
+    <!-- Road -->
+    <div class="road">
+        <div class="road-line"></div>
+    </div>
+
+    <!-- Fun message -->
+    <div class="fun-msg" id="funMsg">🎉 Vroom! Conversion complete!</div>
+
+    <!-- Title -->
+    <div class="title">🚗 The Distance-O-Matic 3000!</div>
+
+    <!-- Steps -->
+    <div class="steps">
+        <div class="step active" id="step1">
+            <div class="step-num">1</div>
+            🪟 Pick units from the windshield!
+        </div>
+        <div class="step" id="step2">
+            <div class="step-num">2</div>
+            🚪 Type distance in the side window!
+        </div>
+        <div class="step" id="step3">
+            <div class="step-num">3</div>
+            🔴 Honk the button!
+        </div>
+    </div>
+
+    <!-- Car Scene -->
+    <div class="car-scene">
+        <div class="car-wrapper" id="carWrapper">
+
+            <!-- Result Bubble -->
+            <div class="result-bubble" id="resultBubble">?</div>
+
+            <!-- Exhaust puffs -->
+            <div class="exhaust">
+                <div class="puff"></div>
+                <div class="puff"></div>
+                <div class="puff"></div>
+            </div>
+
+            <!-- CAR SVG -->
+            <svg width="520" height="260" viewBox="0 0 520 260" xmlns="[http://www.w3.org/2000/svg">](http://www.w3.org/2000/svg">)
+
+                <!-- Car Body -->
+                <rect x="20" y="130" width="480" height="90" rx="20" fill="#E63946"/>
+
+                <!-- Car Roof -->
+                <path d="M 130 130 Q 160 60 220 50 L 380 50 Q 420 50 440 130 Z" fill="#C1121F"/>
+
+                <!-- Windshield (front) -->
+                <path d="M 310 130 Q 320 65 370 55 L 430 55 Q 445 65 440 130 Z" fill="#ADE8F4" opacity="0.8"/>
+                <!-- Windshield frame -->
+                <path d="M 310 130 Q 320 65 370 55 L 430 55 Q 445 65 440 130 Z" fill="none" stroke="#90E0EF" stroke-width="3"/>
+
+                <!-- Side Window -->
+                <path d="M 135 130 Q 140 70 175 58 L 300 58 Q 315 65 310 130 Z" fill="#ADE8F4" opacity="0.8"/>
+                <!-- Side Window frame -->
+                <path d="M 135 130 Q 140 70 175 58 L 300 58 Q 315 65 310 130 Z" fill="none" stroke="#90E0EF" stroke-width="3"/>
+
+                <!-- Door lines -->
+                <line x1="160" y1="130" x2="155" y2="218" stroke="#C1121F" stroke-width="2"/>
+                <line x1="320" y1="130" x2="325" y2="218" stroke="#C1121F" stroke-width="2"/>
+
+                <!-- Door handle left -->
+                <rect x="200" y="175" width="30" height="6" rx="3" fill="#FFD700"/>
+
+                <!-- Door handle right -->
+                <rect x="355" y="175" width="30" height="6" rx="3" fill="#FFD700"/>
+
+                <!-- Front bumper -->
+                <rect x="460" y="195" width="40" height="15" rx="5" fill="#C1121F"/>
+
+                <!-- Rear bumper -->
+                <rect x="20" y="195" width="40" height="15" rx="5" fill="#C1121F"/>
+
+                <!-- Headlight -->
+                <rect x="468" y="155" width="28" height="16" rx="4" fill="#FFD700" opacity="0.9"/>
+                <rect x="470" y="157" width="24" height="12" rx="3" fill="#FFFACD"/>
+
+                <!-- Tail light -->
+                <rect x="24" y="155" width="22" height="16" rx="4" fill="#FF4500"/>
+
+                <!-- Front Wheel -->
+                <circle cx="400" cy="222" r="36" fill="#222"/>
+                <circle cx="400" cy="222" r="26" fill="#444"/>
+                <circle cx="400" cy="222" r="14" fill="#888" id="frontWheel"/>
+                <circle cx="400" cy="222" r="5" fill="#FFD700"/>
+
+                <!-- Rear Wheel -->
+                <circle cx="120" cy="222" r="36" fill="#222"/>
+                <circle cx="120" cy="222" r="26" fill="#444"/>
+                <circle cx="120" cy="222" r="14" fill="#888" id="rearWheel"/>
+                <circle cx="120" cy="222" r="5" fill="#FFD700"/>
+
+                <!-- Wheel spokes front -->
+                <line x1="400" y1="208" x2="400" y2="236" stroke="#666" stroke-width="3" id="fSpoke1"/>
+                <line x1="386" y1="222" x2="414" y2="222" stroke="#666" stroke-width="3" id="fSpoke2"/>
+
+                <!-- Wheel spokes rear -->
+                <line x1="120" y1="208" x2="120" y2="236" stroke="#666" stroke-width="3" id="rSpoke1"/>
+                <line x1="106" y1="222" x2="134" y2="222" stroke="#666" stroke-width="3" id="rSpoke2"/>
+
+                <!-- Exhaust pipe -->
+                <rect x="20" y="210" width="25" height="8" rx="4" fill="#888"/>
+
+            </svg>
+
+            <!-- Windshield Interactive Panel (front window) -->
+            <div class="windshield-panel" id="windshieldPanel">
+                <div class="panel-label">⚙️ From → To</div>
+                <select id="fromUnit" onchange="updateSteps(1)">
+                    <option value="km">Kilometers (km)</option>
+                    <option value="miles">Miles (mi)</option>
+                    <option value="meters">Meters (m)</option>
+                    <option value="feet">Feet (ft)</option>
+                    <option value="inches">Inches (in)</option>
+                    <option value="cm">Centimeters (cm)</option>
+                    <option value="yards">Yards (yd)</option>
+                    <option value="nautical">Nautical Miles (nm)</option>
+                    <option value="lightyears">Light Years (ly)</option>
+                </select>
+                <div style="font-size:0.55rem; color:#003366; font-weight:bold;">↓ converts to ↓</div>
+                <select id="toUnit" onchange="updateSteps(1)">
+                    <option value="miles">Miles (mi)</option>
+                    <option value="km">Kilometers (km)</option>
+                    <option value="meters">Meters (m)</option>
+                    <option value="feet">Feet (ft)</option>
+                    <option value="inches">Inches (in)</option>
+                    <option value="cm">Centimeters (cm)</option>
+                    <option value="yards">Yards (yd)</option>
+                    <option value="nautical">Nautical Miles (nm)</option>
+                    <option value="lightyears">Light Years (ly)</option>
+                </select>
+            </div>
+
+            <!-- Side Window Interactive Panel -->
+            <div class="side-panel" id="sidePanel">
+                <div class="panel-label">📏 Enter Distance</div>
+                <input
+                    type="number"
+                    id="distanceInput"
+                    placeholder="e.g. 100"
+                    min="0"
+                    oninput="updateSteps(2)"
+                />
+            </div>
+
+            <!-- Convert / Honk Button -->
+            <button class="convert-btn" id="convertBtn" onclick="convertDistance()">
+                📯 HONK & CONVERT!
+            </button>
+
+        </div>
+    </div>
+
+    <script src="script.js"></script>
+</body>
+</html>
