@@ -1,0 +1,404 @@
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+body {
+    background: linear-gradient(180deg, #87CEEB 0%, #87CEEB 60%, #90EE90 60%, #228B22 100%);
+    min-height: 100vh;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    font-family: 'Arial', sans-serif;
+    overflow: hidden;
+}
+
+/* ─── Road ─────────────────────────────────────── */
+.road {
+    position: fixed;
+    bottom: 0;
+    width: 100%;
+    height: 120px;
+    background: #555;
+    z-index: 0;
+}
+
+.road-line {
+    position: absolute;
+    top: 50%;
+    width: 100%;
+    height: 8px;
+    background: repeating-linear-gradient(
+        90deg,
+        #FFD700 0px, #FFD700 60px,
+        transparent 60px, transparent 120px
+    );
+}
+
+/* ─── Title ─────────────────────────────────────── */
+.title {
+    font-size: 2rem;
+    font-weight: bold;
+    color: #fff;
+    text-shadow: 2px 2px 4px rgba(0,0,0,0.5);
+    margin-bottom: 20px;
+    z-index: 10;
+}
+
+/* ─── Car Scene ──────────────────────────────────── */
+.car-scene {
+    position: relative;
+    z-index: 10;
+    display: flex;
+    align-items: flex-end;
+    gap: 0;
+}
+
+.car-wrapper {
+    position: relative;
+    width: 520px;
+    height: 260px;
+    cursor: pointer;
+}
+
+/* ─── Windshield Panel ───────────────────────────── */
+.windshield-panel {
+    position: absolute;
+    top: 28px;
+    left: 310px;
+    width: 130px;
+    height: 105px;
+    background: rgba(135, 206, 235, 0.6);
+    border-radius: 8px 20px 8px 8px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    gap: 4px;
+    cursor: pointer;
+    transition: all 0.3s;
+    z-index: 20;
+    border: 2px solid transparent;
+}
+
+.windshield-panel:hover,
+.windshield-panel.active {
+    background: rgba(135, 206, 235, 0.9);
+    border: 2px solid #FFD700;
+    box-shadow: 0 0 15px rgba(255, 215, 0, 0.7);
+}
+
+.windshield-panel .panel-label {
+    font-size: 0.55rem;
+    font-weight: bold;
+    color: #003366;
+    text-transform: uppercase;
+    letter-spacing: 1px;
+}
+
+.windshield-panel select {
+    background: transparent;
+    border: 1px solid #003366;
+    border-radius: 4px;
+    color: #003366;
+    font-size: 0.65rem;
+    font-weight: bold;
+    padding: 2px 4px;
+    cursor: pointer;
+    width: 110px;
+    text-align: center;
+}
+
+/* ─── Side Window Panel ──────────────────────────── */
+.side-panel {
+    position: absolute;
+    top: 32px;
+    left: 155px;
+    width: 140px;
+    height: 80px;
+    background: rgba(135, 206, 235, 0.6);
+    border-radius: 6px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    gap: 6px;
+    cursor: pointer;
+    transition: all 0.3s;
+    z-index: 20;
+    border: 2px solid transparent;
+}
+
+.side-panel:hover,
+.side-panel.active {
+    background: rgba(135, 206, 235, 0.9);
+    border: 2px solid #FFD700;
+    box-shadow: 0 0 15px rgba(255, 215, 0, 0.7);
+}
+
+.side-panel .panel-label {
+    font-size: 0.5rem;
+    font-weight: bold;
+    color: #003366;
+    text-transform: uppercase;
+    letter-spacing: 1px;
+}
+
+.side-panel input {
+    background: transparent;
+    border: 1px solid #003366;
+    border-radius: 4px;
+    color: #003366;
+    font-size: 0.75rem;
+    font-weight: bold;
+    padding: 2px 4px;
+    width: 110px;
+    text-align: center;
+}
+
+.side-panel input::placeholder {
+    color: rgba(0, 51, 102, 0.6);
+    font-size: 0.6rem;
+}
+
+/* ─── Result Bubble ──────────────────────────────── */
+.result-bubble {
+    position: absolute;
+    top: -80px;
+    left: 50%;
+    transform: translateX(-50%);
+    background: #FFD700;
+    border-radius: 20px;
+    padding: 10px 20px;
+    font-size: 1rem;
+    font-weight: bold;
+    color: #333;
+    white-space: nowrap;
+    box-shadow: 0 4px 15px rgba(0,0,0,0.3);
+    opacity: 0;
+    transition: all 0.4s;
+    z-index: 30;
+}
+
+.result-bubble::after {
+    content: '';
+    position: absolute;
+    bottom: -10px;
+    left: 50%;
+    transform: translateX(-50%);
+    border: 10px solid transparent;
+    border-top-color: #FFD700;
+    border-bottom: none;
+}
+
+.result-bubble.show {
+    opacity: 1;
+    top: -90px;
+}
+
+/* ─── Steps ──────────────────────────────────────── */
+.steps {
+    display: flex;
+    gap: 20px;
+    margin-bottom: 15px;
+    z-index: 10;
+}
+
+.step {
+    background: rgba(255,255,255,0.85);
+    border-radius: 12px;
+    padding: 8px 16px;
+    font-size: 0.8rem;
+    font-weight: bold;
+    color: #333;
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    transition: all 0.3s;
+    border: 2px solid transparent;
+}
+
+.step.active {
+    border-color: #FFD700;
+    background: #FFD700;
+    transform: scale(1.05);
+}
+
+.step-num {
+    background: #333;
+    color: white;
+    border-radius: 50%;
+    width: 22px;
+    height: 22px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 0.75rem;
+}
+
+.step.active .step-num {
+    background: #fff;
+    color: #333;
+}
+
+/* ─── Convert Button ─────────────────────────────── */
+.convert-btn {
+    position: absolute;
+    bottom: 70px;
+    right: 20px;
+    background: #FF4500;
+    color: white;
+    border: none;
+    border-radius: 50%;
+    width: 60px;
+    height: 60px;
+    font-size: 0.55rem;
+    font-weight: bold;
+    cursor: pointer;
+    transition: all 0.2s;
+    z-index: 20;
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+    box-shadow: 0 4px 10px rgba(0,0,0,0.3);
+}
+
+.convert-btn:hover {
+    background: #FF6347;
+    transform: scale(1.1);
+}
+
+.convert-btn:active {
+    transform: scale(0.95);
+}
+
+/* ─── Exhaust ─────────────────────────────────────── */
+.exhaust {
+    position: absolute;
+    bottom: 68px;
+    left: -15px;
+    display: flex;
+    gap: 4px;
+}
+
+.puff {
+    width: 12px;
+    height: 12px;
+    background: rgba(200,200,200,0.7);
+    border-radius: 50%;
+    animation: puff 1.5s infinite;
+}
+
+.puff:nth-child(2) {
+    animation-delay: 0.3s;
+    width: 16px;
+    height: 16px;
+}
+
+.puff:nth-child(3) {
+    animation-delay: 0.6s;
+    width: 20px;
+    height: 20px;
+}
+
+/* ─── Fun Message ────────────────────────────────── */
+.fun-msg {
+    position: fixed;
+    top: 20px;
+    background: rgba(255,255,255,0.9);
+    border-radius: 12px;
+    padding: 10px 20px;
+    font-size: 0.9rem;
+    font-weight: bold;
+    color: #333;
+    z-index: 100;
+    opacity: 0;
+    transition: all 0.5s;
+    transform: translateY(-20px);
+}
+
+.fun-msg.show {
+    opacity: 1;
+    transform: translateY(0);
+}
+
+/* ─── Clouds ─────────────────────────────────────── */
+.cloud {
+    position: fixed;
+    background: white;
+    border-radius: 50px;
+    opacity: 0.8;
+}
+
+.cloud::before,
+.cloud::after {
+    content: '';
+    position: absolute;
+    background: white;
+    border-radius: 50%;
+}
+
+.cloud1 {
+    width: 100px;
+    height: 35px;
+    top: 8%;
+    left: 10%;
+    animation: moveClouds 20s linear infinite;
+}
+
+.cloud1::before {
+    width: 50px;
+    height: 50px;
+    top: -25px;
+    left: 15px;
+}
+
+.cloud1::after {
+    width: 35px;
+    height: 35px;
+    top: -15px;
+    left: 45px;
+}
+
+.cloud2 {
+    width: 80px;
+    height: 28px;
+    top: 15%;
+    left: 60%;
+    animation: moveClouds 28s linear infinite;
+}
+
+.cloud2::before {
+    width: 40px;
+    height: 40px;
+    top: -20px;
+    left: 10px;
+}
+
+.cloud2::after {
+    width: 30px;
+    height: 30px;
+    top: -12px;
+    left: 38px;
+}
+
+/* ─── Animations ─────────────────────────────────── */
+@keyframes moveClouds {
+    from { transform: translateX(0); }
+    to   { transform: translateX(110vw); }
+}
+
+@keyframes puff {
+    0%   { opacity: 0.8; transform: translateX(0) scale(1); }
+    100% { opacity: 0;   transform: translateX(-30px) scale(1.5); }
+}
+
+@keyframes spin {
+    from { transform: rotate(0deg); }
+    to   { transform: rotate(360deg); }
+}
+
+.wheel-spin {
+    animation: spin 0.5s linear infinite;
+}
